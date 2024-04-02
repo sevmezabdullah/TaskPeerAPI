@@ -24,5 +24,8 @@
     "reflect-metadata": "^0.2.2",
     "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.12.0"
   }
 }
