@@ -1,0 +1,20 @@
+import dotenv from 'dotenv';
+
+import { cleanEnv, host, num, port, str } from 'envalid'
+dotenv.config();
+
+export const envConfig = cleanEnv(process.env, {
+    NODE_ENV: str({ choices: ['development', 'production', 'test'], default: 'development' }),
+    PORT: port(),
+    HOST: host(),
+    DB_PORT: num(),
+    DB_NAME: str(),
+    DB_USER: str(),
+    DB_PASSWORD: str(),
+    DB_HOST: str(),
+    JWT_SECRET: str(),
+    CORS_ORIGIN: str(),
+    COMMON_RATE_LIMIT_MAX_REQUESTS: num(),
+    COMMON_RATE_LIMIT_WINDOW_MS: num(),
+
+});
