@@ -17,5 +17,11 @@ export const envConfig = cleanEnv(process.env, {
     COMMON_RATE_LIMIT_MAX_REQUESTS: num(),
     COMMON_RATE_LIMIT_WINDOW_MS: num(),
     DB_URL: str(),
+    EMAIL_HOST: str(),
+    EMAIL_PORT: str(),
+    EMAIL_USER: str(),
+    EMAIL_PASSWORD: str(),
+    EMAIL_FROM: str(),
+    EMAIL_SECURE: str(),
 
 });

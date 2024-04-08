@@ -9,29 +9,24 @@ import { eq } from "drizzle-orm";
 
 
 export const users: User[] = [
-    { id: 1, email: 'alice@example.com', password: '', createdAt: new Date(), updatedAt: new Date(), deviceToken: '', userId: 1 },
 
 ];
 
 @injectable()
 export class UserRepository implements IUserRepository {
-    async login(email: string): Promise<User> {
+    async login(email: string): Promise<any | null> {
 
         const result = await DB.select().from(user).where(eq(user.email, email))
-        console.log(result)
-
-        return {
-            id: 1,
-            email: '',
-            password: '',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            deviceToken: '',
-            userId: 1
-        };
+        if (result.length > 0) {
+            return result[0];
+        } else {
+            return null;
+        }
     }
-    register(email: string, password: string): Promise<IResponse> {
-        throw new Error("Method not implemented.");
+    async register(email: string, password: string): Promise<any | null> {
+
+        const result = await DB.insert(user).values({ email: email, password: password }).execute();
+        return result;
     }
     getAllUsers(): Promise<IResponse> {
         throw new Error("Method not implemented.");

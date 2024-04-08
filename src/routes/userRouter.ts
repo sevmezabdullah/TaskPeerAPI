@@ -11,6 +11,7 @@ import { createApiResponse } from '../docs/openApiResponseBuilders';
 import { z } from 'zod';
 import { Token } from '../lib/token';
 import { Hash } from '../lib/hash';
+import { Email } from '../lib/email';
 
 export const userRouterRegistry = new OpenAPIRegistry();
 const userRouter = express.Router();
@@ -21,6 +22,7 @@ container.bind<IUserRepository>(INTERFACE_TYPE.UserRepository).to(UserRepository
 container.bind(INTERFACE_TYPE.UserController).to(UserController)
 container.bind(INTERFACE_TYPE.Token).to(Token)
 container.bind(INTERFACE_TYPE.Hash).to(Hash)
+container.bind(INTERFACE_TYPE.Email).to(Email)
 const controller = container.get<UserController>(INTERFACE_TYPE.UserController)
 
 
@@ -34,5 +36,6 @@ userRouterRegistry.registerPath({
 
 
 userRouter.post('/auth/login', controller.onLogin.bind(controller))
+userRouter.post('/auth/register', controller.onRegister.bind(controller))
 
 export default userRouter;

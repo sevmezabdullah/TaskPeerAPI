@@ -3,5 +3,6 @@ export const INTERFACE_TYPE = {
     UserRepository: Symbol.for('IUserRepository'),
     UserController: Symbol.for('UserController'),
     Token: Symbol.for('Token'),
-    Hash: Symbol.for('Hash')
+    Hash: Symbol.for('Hash'),
+    Email: Symbol.for('Email'),
 }

@@ -1,4 +1,5 @@
-import { User } from "../../entities/UserEntity"
+
+import { User } from "../../models/UserModel"
 import { ServiceResponse } from "../../utils/ServiceResponse"
 
 

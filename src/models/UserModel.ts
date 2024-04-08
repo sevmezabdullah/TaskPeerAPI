@@ -10,10 +10,15 @@ export const UserSchema = z.object({
     id: z.number(),
     createdAt: z.date(),
     updatedAt: z.date(),
-    userId: z.number(),
     email: z.string().email(),
     password: z.string(),
     deviceToken: z.string(),
+    isVerified: z.boolean(),
+    isActive: z.boolean(),
+    isPremium: z.boolean(),
+    premiumStartDate: z.date().nullable(),
+    avatar: z.string(),
+    role: z.number(),
 
 });
 
