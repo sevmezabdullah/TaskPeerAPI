@@ -16,5 +16,6 @@ export const envConfig = cleanEnv(process.env, {
     CORS_ORIGIN: str(),
     COMMON_RATE_LIMIT_MAX_REQUESTS: num(),
     COMMON_RATE_LIMIT_WINDOW_MS: num(),
+    DB_URL: str(),
 
 });

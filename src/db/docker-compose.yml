@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  task_peer_db:
+    image: "postgres:14.0"
+    ports:
+      - "5432:5432"
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      POSTGRES_USER: "task_peer"
+      POSTGRES_PASSWORD: "task_peer"
+      POSTGRES_DB: "task_peer"
+    volumes:
+      - ./data:/var/lib/postgresql/data

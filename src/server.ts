@@ -11,6 +11,7 @@ import requestLogger from './middleware/requestLogger';
 import { healthCheckRouter } from './routes/healthCheck';
 import { openAPIRouter } from './docs/openApiRouter';
 import errorHandler from './middleware/errorHandler';
+import userRouter from './routes/userRouter';
 const logger = pino({ name: 'Server Started' })
 
 
@@ -27,6 +28,7 @@ app.use(rateLimiter)
 app.use(requestLogger())
 //Routes
 app.use('/health-check', healthCheckRouter)
+app.use('/api', userRouter)
 
 
 
