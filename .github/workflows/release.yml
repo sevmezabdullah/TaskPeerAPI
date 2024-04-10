@@ -1,4 +1,4 @@
-name: $ {{ secrets.APP_NAME }}
+name: Task Peer API
 
 on:
   push:
