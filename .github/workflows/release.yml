@@ -32,6 +32,7 @@ jobs:
           key: ${{ secrets.SECRET_PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            cd ~/var/www/task-peer-api
             git pull origin release
             rm -r ${{ secrets.RELEASE_PATH }}/src/db/migrations/*
             npm install
