@@ -31,6 +31,9 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }
           script: |
             cd ${{ secrets.RELEASE_PATH }}
+            cd ${{ secrets.RELEASE_PATH }}/src/db
+            docker-compose up -d
+            cd ..
             git pull origin release
             rm -r ${{ secrets.RELEASE_PATH }}/src/db/migrations/*
             npm install
