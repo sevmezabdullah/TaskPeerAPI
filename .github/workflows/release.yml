@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
