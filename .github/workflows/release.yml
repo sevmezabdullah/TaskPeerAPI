@@ -32,10 +32,7 @@ jobs:
           key: ${{ secrets.SECRET_PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd ${{ secrets.RELEASE_PATH }}
-            cd ${{ secrets.RELEASE_PATH }}/src/db
-            docker-compose up -d
-            cd ..
+            cd ~/var/www/task-peer-api
             git pull origin release
             rm -r ${{ secrets.RELEASE_PATH }}/src/db/migrations/*
             npm install
