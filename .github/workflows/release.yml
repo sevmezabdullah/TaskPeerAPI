@@ -36,7 +36,7 @@ jobs:
             git pull origin release
             rm -r ${{ secrets.RELEASE_PATH }}/src/db/migrations/*
             npm install
-            npm run db:genarete
+            npm run db:generate
             npm run db:migrate
             npm run stop
             npm run deploy
