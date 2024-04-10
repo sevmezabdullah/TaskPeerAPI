@@ -1,2 +1,4 @@
 /node_modules
-*.stat
+/src/db/data/*
+/src/db/migrations/*
+

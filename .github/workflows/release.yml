@@ -41,4 +41,5 @@ jobs:
             npm install
             npm run db:genarete
             npm run db:migrate
+            npm run stop
             npm run deploy
