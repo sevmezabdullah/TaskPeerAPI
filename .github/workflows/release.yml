@@ -26,7 +26,9 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_SERVER }}
           username: ${{ secrets.REMOTE_USER }}
+          port : ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }
           script: |
             cd ${{ secrets.RELEASE_PATH }}
             git pull origin release
