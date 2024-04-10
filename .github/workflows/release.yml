@@ -27,6 +27,7 @@ jobs:
           host: ${{ secrets.REMOTE_SERVER }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.KEY }}
+          phassphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd ${{ secrets.RELEASE_PATH }}
             cd ${{ secrets.RELEASE_PATH }}/src/db
