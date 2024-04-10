@@ -34,4 +34,4 @@ jobs:
             npm install
             npm run db:genarete
             npm run db:migrate
-            pm2 restart task-peer-api
+            npm run deploy
