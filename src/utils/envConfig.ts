@@ -23,5 +23,6 @@ export const envConfig = cleanEnv(process.env, {
     EMAIL_PASSWORD: str(),
     EMAIL_FROM: str(),
     EMAIL_SECURE: str(),
+    EMAIL_SERVICE: str(),
 
 });

@@ -25,7 +25,7 @@ export class UserController {
     async onRegister(request: Request, response: Response) {
         const email = request.body.email;
         const password = request.body.password;
-        console.log(email, password)
+
 
         const result = await this.service.register(email, password);
         return response.json(result);

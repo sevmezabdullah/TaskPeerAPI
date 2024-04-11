@@ -12,6 +12,8 @@ import { IHash } from "../interfaces/IHash";
 import { ResponseStatus, ServiceResponse } from "../utils/ServiceResponse";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../models/UserModel";
+import { Email } from "../lib/email";
+import { email } from "envalid";
 
 
 @injectable()
@@ -20,12 +22,14 @@ export class UserService implements IUserService {
     private repository: IUserRepository;
     private token: IToken
     private hash: Hash
+    private emailService: Email;
 
 
-    constructor(@inject(INTERFACE_TYPE.UserRepository) repository: IUserRepository, @inject(INTERFACE_TYPE.Token) token: IToken, @inject(INTERFACE_TYPE.Hash) hash: IHash) {
+    constructor(@inject(INTERFACE_TYPE.UserRepository) repository: IUserRepository, @inject(INTERFACE_TYPE.Token) token: IToken, @inject(INTERFACE_TYPE.Hash) hash: IHash, @inject(INTERFACE_TYPE.Email) email: Email) {
         this.repository = repository;
         this.token = token;
         this.hash = hash;
+        this.emailService = email;
     }
 
 
@@ -51,9 +55,10 @@ export class UserService implements IUserService {
     async register(email: string, password: string): Promise<ServiceResponse<any | undefined>> {
 
         const hashedPassword = await this.hash.hashPassword(password);
-
+        this.emailService.sendVerificationEmail(email, 'token');
         try {
             const result = await this.repository.register(email, hashedPassword);
+
             return new ServiceResponse(ResponseStatus.Success, "Kullanıcı başarıyla oluşturuldu", result, StatusCodes.OK)
         } catch (error: any) {
 
