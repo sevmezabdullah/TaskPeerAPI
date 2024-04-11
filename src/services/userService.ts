@@ -13,7 +13,7 @@ import { ResponseStatus, ServiceResponse } from "../utils/ServiceResponse";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../models/UserModel";
 import { Email } from "../lib/email";
-import { email } from "envalid";
+
 
 
 @injectable()
@@ -66,7 +66,7 @@ export class UserService implements IUserService {
                 return new ServiceResponse(ResponseStatus.Failed, "Bu email adresi zaten kullanımda", null, StatusCodes.BAD_REQUEST)
             }
 
-            return new ServiceResponse(ResponseStatus.Failed, error, null, StatusCodes.OK)
+            return new ServiceResponse(ResponseStatus.Failed, error, null, StatusCodes.BAD_REQUEST)
         }
 
     }

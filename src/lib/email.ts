@@ -3,6 +3,10 @@ import { IEmail } from '../interfaces/IEmail';
 import { injectable } from 'inversify';
 import { envConfig } from '../utils/envConfig';
 
+import path from 'path';
+import fs from 'fs';
+import handlerbars from 'handlebars';
+
 
 @injectable()
 export class Email implements IEmail {
@@ -13,6 +17,10 @@ export class Email implements IEmail {
         throw new Error('Method not implemented.');
     }
     async sendVerificationEmail(to: string, token: string): Promise<void> {
+
+        const emailTemplateSource = fs.readFileSync(path.join(__dirname, '../templates/email_verification.hbs'), 'utf8');
+        const template = handlerbars.compile(emailTemplateSource);
+        const htmlToSend = template({ token: token });
         const transporter = nodemailer.createTransport({
 
             service: envConfig.EMAIL_SERVICE,
@@ -29,7 +37,8 @@ export class Email implements IEmail {
             from: envConfig.EMAIL_USER,
             to: to,
             subject: 'Account Verification Token',
-            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + 'localhost:3000' + '\/api\/auth\/confirmation\/' + token + '.\n'
+            html: htmlToSend
+
         };
 
         transporter.sendMail(mailOptions, function (err, info) {
