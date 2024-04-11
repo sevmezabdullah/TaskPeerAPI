@@ -6,6 +6,8 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "deploy": "pm2 start src/index.ts --name taskpeerapi",
+    "restart": "pm2 -i restart",
+    "stop": "pm2 stop taskpeerapi",
     "db:generate": "drizzle-kit generate:pg",
     "db:push": "drizzle-kit push:pg",
     "db:migrate": "tsx ./migration.ts",

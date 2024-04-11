@@ -34,8 +34,10 @@ jobs:
           script: |
             cd ~/var/www/task-peer-api
             git pull origin release
-            rm -r ${{ secrets.RELEASE_PATH }}/src/db/migrations/*
+            rm -r ~/var/www/task-peer-api/src/db/migrations/*
+            rm -r ~/var/www/task-peer-api/src/db/data/*
             npm install
             npm run db:generate
             npm run db:migrate
+            npm run stop
             npm run deploy
