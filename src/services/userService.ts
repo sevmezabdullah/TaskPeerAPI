@@ -20,14 +20,14 @@ import { Email } from "../lib/email";
 export class UserService implements IUserService {
 
     private repository: IUserRepository;
-    private token: IToken
+    private tokenService: IToken
     private hash: Hash
     private emailService: Email;
 
 
     constructor(@inject(INTERFACE_TYPE.UserRepository) repository: IUserRepository, @inject(INTERFACE_TYPE.Token) token: IToken, @inject(INTERFACE_TYPE.Hash) hash: IHash, @inject(INTERFACE_TYPE.Email) email: Email) {
         this.repository = repository;
-        this.token = token;
+        this.tokenService = token;
         this.hash = hash;
         this.emailService = email;
     }
@@ -37,11 +37,19 @@ export class UserService implements IUserService {
     async login(email: string, password: string): Promise<ServiceResponse<any | undefined>> {
 
         try {
-
             const result = await this.repository.login(email);
-
             if (result !== null) {
-                return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", result, StatusCodes.OK)
+
+                const isPasswordTrue = await this.hash.comparePassword(password, result?.password ?? '')
+                if (isPasswordTrue && result?.isVerified) {
+                    const token = await this.tokenService.generateToken(result)
+                    return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", { token: token }, StatusCodes.OK)
+                } else if (isPasswordTrue && !result?.isVerified) {
+                    return new ServiceResponse(ResponseStatus.Failed, "E-Posta adresinize gönderdiğimiz talimatları takip ederek aktivasyonunuzu tamamladıktan sonra tekrar deneyiniz.", null, StatusCodes.BAD_REQUEST)
+                }
+                else {
+                    return new ServiceResponse(ResponseStatus.Failed, "Email veya şifreniz hatalı. Lütfen tekrar deneyin.", null, StatusCodes.BAD_REQUEST)
+                }
             }
             else
                 return new ServiceResponse(ResponseStatus.Failed, "Kullanıcı doğrulanamadı", null, StatusCodes.OK)
@@ -53,11 +61,14 @@ export class UserService implements IUserService {
 
     }
     async register(email: string, password: string): Promise<ServiceResponse<any | undefined>> {
-
-        const hashedPassword = await this.hash.hashPassword(password);
-        this.emailService.sendVerificationEmail(email, 'token');
         try {
+            const hashedPassword = await this.hash.hashPassword(password);
+
             const result = await this.repository.register(email, hashedPassword);
+
+            if (result) {
+                this.emailService.sendVerificationEmail(email, 'token');
+            }
 
             return new ServiceResponse(ResponseStatus.Success, "Kullanıcı başarıyla oluşturuldu", result, StatusCodes.OK)
         } catch (error: any) {
