@@ -62,7 +62,7 @@ export class Email implements IEmail {
         const mailOptions = {
             from: envConfig.EMAIL_USER,
             to: to,
-            subject: 'Account Verification Token',
+            subject: 'Hesap Doğrulama',
             html: htmlToSend
 
         };
