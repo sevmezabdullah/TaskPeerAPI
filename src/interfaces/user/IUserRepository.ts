@@ -1,17 +1,19 @@
 
 
 import { User } from "../../models/UserModel"
-import { IResponse } from "../IResponse"
+
 
 export interface IUserRepository {
     login(email?: string): Promise<User | null | undefined>
-    register(email: string, password: string): Promise<IResponse>
-    getAllUsers(): Promise<IResponse>
-    forgotPassword(email: string): Promise<IResponse>
-    resetPassword(email: string, password: string): Promise<IResponse>
-    updateProfile(id: string, user: any): Promise<IResponse>
-    deleteUser(email: string): Promise<IResponse>
+    register(email: string, password: string): Promise<any | null>
+    googleLogin(email: string): Promise<any | null>
+    googleRegister(email: string, hashedPassword: string): Promise<any | null>
+    getAllUsers(): Promise<any | null>
+    forgotPassword(email: string): Promise<any | null>
+    resetPassword(email: string, password: string): Promise<any | null>
+    updateProfile(id: string, user: any): Promise<any | null>
+    deleteUser(email: string): Promise<any | null>
     getUserByEmail(email: string): Promise<User>
-    getUserById(id: string): Promise<IResponse>
-    updateUser(email: string, user: any): Promise<IResponse>
+    getUserById(id: number): Promise<any | null>
+    updateUser(email: string, user: any): Promise<any | null>
 }

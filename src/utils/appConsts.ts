@@ -5,4 +5,5 @@ export const INTERFACE_TYPE = {
     Token: Symbol.for('Token'),
     Hash: Symbol.for('Hash'),
     Email: Symbol.for('Email'),
+    AuthHandler: Symbol.for('AuthHandler'),
 }

@@ -6,6 +6,7 @@ import { ServiceResponse } from "../../utils/ServiceResponse"
 export interface IUserService {
     login(email: string, password: string): Promise<ServiceResponse<{ token: string } | null>>
     register(email: string, password: string): Promise<ServiceResponse>
+    googleLogin(email: string): Promise<ServiceResponse<{ token: string } | null>>
     getAllUsers(): Promise<ServiceResponse>
     forgotPassword(email: string): Promise<ServiceResponse>
     resetPassword(email: string, password: string): Promise<ServiceResponse>

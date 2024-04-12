@@ -9,7 +9,7 @@ export class Token implements IToken {
         return token
     }
     async verifyToken(token: string): Promise<any> {
-        const data = await jwt.verify(token, 'secretKey')
+        const data = await jwt.verify(token, envConfig.JWT_SECRET)
         return Promise.resolve(data)
     }
 

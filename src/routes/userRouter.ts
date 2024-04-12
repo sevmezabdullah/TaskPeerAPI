@@ -37,5 +37,7 @@ userRouterRegistry.registerPath({
 
 userRouter.post('/auth/login', controller.onLogin.bind(controller))
 userRouter.post('/auth/register', controller.onRegister.bind(controller))
+userRouter.post('/auth/forgot-password', controller.onForgotPassword.bind(controller))
+userRouter.post('/auth/google', controller.onGoogleLogin.bind(controller))
 
 export default userRouter;

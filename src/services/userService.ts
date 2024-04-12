@@ -13,6 +13,7 @@ import { ResponseStatus, ServiceResponse } from "../utils/ServiceResponse";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../models/UserModel";
 import { Email } from "../lib/email";
+import crypto from "crypto";
 
 
 
@@ -30,6 +31,36 @@ export class UserService implements IUserService {
         this.tokenService = token;
         this.hash = hash;
         this.emailService = email;
+    }
+    async googleLogin(email: string): Promise<ServiceResponse<{ token: string; } | null>> {
+
+        try {
+            const result = await this.repository.googleLogin(email);
+
+            if (result !== undefined && result !== null) {
+                const token = await this.tokenService.generateToken(result)
+                return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", { token: token }, StatusCodes.OK)
+            }
+            else {
+
+                const generatedPassword = crypto.randomBytes(20).toString('hex');
+                const hashedPassword = await this.hash.hashPassword(generatedPassword);
+                const savedUser = await this.repository.googleRegister(email, hashedPassword);
+                console.log(savedUser)
+                if (savedUser) {
+                    const token = await this.tokenService.generateToken(savedUser)
+                    return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", { token: token }, StatusCodes.OK)
+                }
+
+                return new ServiceResponse(ResponseStatus.Failed, "Kullanıcı doğrulanamadı", null, StatusCodes.OK)
+            }
+        } catch (error) {
+            return new ServiceResponse(ResponseStatus.Failed, "Giriş esnasında hata meydana geldi", null, StatusCodes.BAD_REQUEST)
+        }
+
+
+
+
     }
 
 

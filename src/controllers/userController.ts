@@ -37,4 +37,11 @@ export class UserController {
         const result = await this.service.forgotPassword(email);
         return response.json(result);
     }
+
+    async onGoogleLogin(request: Request, response: Response) {
+        const email = request.body.email;
+
+        const result = await this.service.googleLogin(email);
+        return response.json(result);
+    }
 }
