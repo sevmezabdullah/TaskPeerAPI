@@ -84,8 +84,15 @@ export class UserService implements IUserService {
     getAllUsers(): Promise<ServiceResponse> {
         throw new Error("Method not implemented.");
     }
-    forgotPassword(email: string): Promise<ServiceResponse> {
-        throw new Error("Method not implemented.");
+    async forgotPassword(email: string): Promise<ServiceResponse> {
+        const user = await this.repository.getUserByEmail(email);
+
+        if (user) {
+            const token = await this.tokenService.generateToken(user);
+            this.emailService.sendVerificationEmail(email, token);
+            return new ServiceResponse(ResponseStatus.Success, "E-Posta adresinize şifre sıfırlama talimatları gönderildi", null, StatusCodes.OK)
+        }
+        return new ServiceResponse(ResponseStatus.Failed, "Kullanıcı bulunamadı", null, StatusCodes.BAD_REQUEST)
     }
     resetPassword(email: string, password: string): Promise<ServiceResponse> {
         throw new Error("Method not implemented.");

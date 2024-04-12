@@ -30,4 +30,11 @@ export class UserController {
         const result = await this.service.register(email, password);
         return response.json(result);
     }
+
+    async onForgotPassword(request: Request, response: Response) {
+        const email = request.body.email;
+
+        const result = await this.service.forgotPassword(email);
+        return response.json(result);
+    }
 }

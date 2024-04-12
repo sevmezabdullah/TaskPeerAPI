@@ -43,8 +43,13 @@ export class UserRepository implements IUserRepository {
     deleteUser(email: string): Promise<IResponse> {
         throw new Error("Method not implemented.");
     }
-    getUserByEmail(email: string): Promise<User> {
-        throw new Error("Method not implemented.");
+    async getUserByEmail(email: string): Promise<any | null> {
+        const result = await DB.select().from(user).where(eq(user.email, email))
+        if (result.length > 0) {
+            return result[0];
+        } else {
+            return null;
+        }
     }
     getUserById(id: string): Promise<IResponse> {
         throw new Error("Method not implemented.");
