@@ -83,7 +83,7 @@ export class UserService implements IUserService {
                 }
             }
             else
-                return new ServiceResponse(ResponseStatus.Failed, "Kullanıcı bulunamadı", null, StatusCodes.OK)
+                return new ServiceResponse(ResponseStatus.Failed, "Kullanıcı bulunamadı", null, StatusCodes.NOT_FOUND)
 
 
         } catch (error: any) {

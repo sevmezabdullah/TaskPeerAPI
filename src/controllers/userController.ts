@@ -19,7 +19,7 @@ export class UserController {
         const password = request.body.password;
 
         const result = await this.service.login(email, password);
-        return response.json(result);
+        return response.status(result.statusCode).json(result);
     }
 
     async onRegister(request: Request, response: Response) {
@@ -28,20 +28,20 @@ export class UserController {
 
 
         const result = await this.service.register(email, password);
-        return response.json(result);
+        return response.status(result.statusCode).json(result);
     }
 
     async onForgotPassword(request: Request, response: Response) {
         const email = request.body.email;
 
         const result = await this.service.forgotPassword(email);
-        return response.json(result);
+        return response.status(result.statusCode).json(result);
     }
 
     async onGoogleLogin(request: Request, response: Response) {
         const email = request.body.email;
 
         const result = await this.service.googleLogin(email);
-        return response.json(result);
+        return response.status(result.statusCode).json(result);
     }
 }
