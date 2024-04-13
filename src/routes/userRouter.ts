@@ -39,6 +39,6 @@ userRouter.post('/auth/login', controller.onLogin.bind(controller))
 userRouter.post('/auth/register', controller.onRegister.bind(controller))
 userRouter.post('/auth/forget-password', controller.onForgotPassword.bind(controller))
 userRouter.post('/auth/google', controller.onGoogleLogin.bind(controller))
-userRouter.get('/change-password/:userId', controller.)
+userRouter.get('/change-password/:userId', controller.onPasswordChange.bind(controller))
 
 export default userRouter;

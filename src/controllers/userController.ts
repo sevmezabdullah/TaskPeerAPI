@@ -49,5 +49,6 @@ export class UserController {
         const userId = request.params.userId
 
 
+        return response.json({})
     }
 }
