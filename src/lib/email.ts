@@ -17,10 +17,10 @@ export class Email implements IEmail {
         throw new Error('Method not implemented.');
     }
 
-    async sendPasswordResetEmail(to: string, userId: string): Promise<void> {
-        const emailTemplateSource = fs.readFileSync(path.join(__dirname, '../templates/reset_password.hbs'), 'utf8');
+    async sendPasswordResetEmail(to: string, token: string): Promise<void> {
+        const emailTemplateSource = fs.readFileSync(path.join(__dirname, '../templates/reset_password.handlebars'), 'utf8');
         const template = handlerbars.compile(emailTemplateSource);
-        const htmlToSend = template({ userId: userId });
+        const htmlToSend = template({ token: token });
         const transporter = nodemailer.createTransport({
             service: envConfig.EMAIL_SERVICE,
             host: envConfig.EMAIL_HOST,
@@ -42,7 +42,7 @@ export class Email implements IEmail {
         });
     }
     async sendVerificationEmail(to: string, token: string): Promise<void> {
-        const emailTemplateSource = fs.readFileSync(path.join(__dirname, '../templates/email_verification.hbs'), 'utf8');
+        const emailTemplateSource = fs.readFileSync(path.join(__dirname, '../templates/email_verification.handlebars'), 'utf8');
         const template = handlerbars.compile(emailTemplateSource);
         const htmlToSend = template({ token: token });
         const transporter = nodemailer.createTransport({

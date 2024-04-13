@@ -13,4 +13,9 @@ export class Token implements IToken {
         return Promise.resolve(data)
     }
 
+    async generatePasswordResetToken(data: any): Promise<string> {
+        const token = await jwt.sign({ data }, envConfig.JWT_SECRET, { expiresIn: '7d' })
+        return token
+    }
+
 }

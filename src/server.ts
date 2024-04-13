@@ -1,6 +1,7 @@
 import express, { Express } from 'express';
 import 'reflect-metadata';
 
+import { engine } from 'express-handlebars';
 
 import cors from 'cors';
 import pino from 'pino';
@@ -12,6 +13,7 @@ import { healthCheckRouter } from './routes/healthCheck';
 import { openAPIRouter } from './docs/openApiRouter';
 import errorHandler from './middleware/errorHandler';
 import userRouter from './routes/userRouter';
+import path from 'path';
 const logger = pino({ name: 'Server Started' })
 
 
@@ -23,12 +25,19 @@ app.use(express.json());
 
 app.use(cors({ origin: envConfig.CORS_ORIGIN, credentials: true }))
 app.use(helmet());
-app.use(rateLimiter)
+//app.use(rateLimiter)
+
+app.engine('handlebars', engine({
+    defaultLayout: false
+}));
+app.use(express.static(path.join(__dirname, '../public')))
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, '../views'));
 
 app.use(requestLogger())
 //Routes
 app.use('/health-check', healthCheckRouter)
-app.use('/api', userRouter)
+app.use('/user', userRouter)
 
 
 

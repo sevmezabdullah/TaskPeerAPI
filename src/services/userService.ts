@@ -119,7 +119,7 @@ export class UserService implements IUserService {
     async forgotPassword(email: string): Promise<ServiceResponse> {
         const user = await this.repository.getUserByEmail(email);
         if (user) {
-            const token = await this.tokenService.generateToken(user);
+            const token = await this.tokenService.generatePasswordResetToken(user);
             this.emailService.sendPasswordResetEmail(email, token);
             return new ServiceResponse(ResponseStatus.Success, "E-Posta adresinize şifre sıfırlama talimatları gönderildi", null, StatusCodes.OK)
         }

@@ -12,6 +12,7 @@ import { z } from 'zod';
 import { Token } from '../lib/token';
 import { Hash } from '../lib/hash';
 import { Email } from '../lib/email';
+import { envConfig } from '../utils/envConfig';
 
 export const userRouterRegistry = new OpenAPIRegistry();
 const userRouter = express.Router();
@@ -35,10 +36,10 @@ userRouterRegistry.registerPath({
 });
 
 
-userRouter.post('/auth/login', controller.onLogin.bind(controller))
-userRouter.post('/auth/register', controller.onRegister.bind(controller))
-userRouter.post('/auth/forget-password', controller.onForgotPassword.bind(controller))
-userRouter.post('/auth/google', controller.onGoogleLogin.bind(controller))
-userRouter.get('/change-password/:userId', controller.onPasswordChange.bind(controller))
+userRouter.post(`${envConfig.API_PREFIX}/auth/login`, controller.onLogin.bind(controller))
+userRouter.post(`${envConfig.API_PREFIX}/auth/register`, controller.onRegister.bind(controller))
+userRouter.post(`${envConfig.API_PREFIX}/auth/forget-password`, controller.onForgotPassword.bind(controller))
+userRouter.post(`${envConfig.API_PREFIX}/auth/google`, controller.onGoogleLogin.bind(controller))
+userRouter.get(`${envConfig.PAGE_PREFIX}/change-password/:userId/:token`, controller.onPasswordChange.bind(controller))
 
 export default userRouter;

@@ -47,8 +47,6 @@ export class UserController {
 
     async onPasswordChange(request: Request, response: Response) {
         const userId = request.params.userId
-
-
-        return response.json({})
+        return response.render('password_change', {});
     }
 }
