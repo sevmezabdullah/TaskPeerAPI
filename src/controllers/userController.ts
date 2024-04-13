@@ -44,4 +44,10 @@ export class UserController {
         const result = await this.service.googleLogin(email);
         return response.status(result.statusCode).json(result);
     }
+
+    async onPasswordChange(request: Request, response: Response) {
+        const userId = request.params.userId
+
+
+    }
 }
