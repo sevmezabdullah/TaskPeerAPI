@@ -38,8 +38,6 @@ export class Email implements IEmail {
         transporter.sendMail(mailOptions, function (err, info) {
             if (err) {
                 console.log(err)
-            } else {
-                console.log(info);
             }
         });
     }
