@@ -16,4 +16,7 @@ export interface IUserRepository {
     getUserByEmail(email: string): Promise<User>
     getUserById(id: number): Promise<any | null>
     updateUser(email: string, user: any): Promise<any | null>
+    updatePassword(email: string, password: string): Promise<any | null>
+    verifyEmail(email: string): Promise<any | null>
+
 }

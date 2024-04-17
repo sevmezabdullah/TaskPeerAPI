@@ -18,6 +18,7 @@ export class UserController {
         const email = request.body.email;
         const password = request.body.password;
 
+
         const result = await this.service.login(email, password);
         return response.status(result.statusCode).json(result);
     }
@@ -48,5 +49,23 @@ export class UserController {
     async onPasswordChange(request: Request, response: Response) {
         const userId = request.params.userId
         return response.render('password_change', {});
+    }
+
+    async onPasswordChangePost(request: Request, response: Response) {
+        const email = request.body.email;
+        const password = request.body.password;
+
+        const result = await this.service.updatePassword(email, password);
+        return response.status(result.statusCode).json(result);
+    }
+
+    async onEmailVerification(request: Request, response: Response) {
+        const token = request.params.token;
+
+        console.log("🚀 ~ file: userController.ts:65 ~ UserController ~ onEmailVerification ~ token:", token)
+        const result = await this.service.verifyEmail(token);
+
+
+        return response.render('email_verified_result', { result });
     }
 }

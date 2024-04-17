@@ -26,5 +26,6 @@ export const envConfig = cleanEnv(process.env, {
     EMAIL_SERVICE: str(),
     API_PREFIX: str(),
     PAGE_PREFIX: str(),
+    HOSTING_URL: str(),
 
 });

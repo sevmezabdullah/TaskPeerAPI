@@ -15,4 +15,6 @@ export interface IUserService {
     getUserByEmail(email: string): Promise<ServiceResponse>
     getUserById(id: string): Promise<ServiceResponse>
     updateUser(email: string, user: User): Promise<ServiceResponse>
+    updatePassword(email: string, password: string): Promise<ServiceResponse>
+    verifyEmail(email: string): Promise<ServiceResponse>
 }

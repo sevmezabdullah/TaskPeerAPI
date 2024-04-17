@@ -12,12 +12,23 @@ import { eq } from "drizzle-orm";
 
 @injectable()
 export class UserRepository implements IUserRepository {
+    verifyEmail(email: string): Promise<any> {
+        const result = DB.update(user).set({ isVerified: true }).where(eq(user.email, email)).execute();
+        if (result) {
+            return result;
+        }
+        throw new Error("Email doğrulanamadı.");
+    }
+    async updatePassword(email: string, password: string): Promise<any> {
+        const result = await DB.update(user).set({ password: password }).where(eq(user.email, email)).execute();
+        if (result) {
+            return result;
+        }
+        throw new Error("Şifre güncellenemedi.");
+    }
+
     async googleRegister(email: string, hashedPassword: string): Promise<any> {
         const savedUser = await DB.insert(user).values({ email: email, password: hashedPassword, isVerified: true }).returning();
-
-        console.log("🚀 ~ file: userRepository.ts:18 ~ UserRepository ~ googleRegister ~ savedUser:", savedUser)
-
-
         if (savedUser[0]) {
             return savedUser[0];
         } else {

@@ -32,13 +32,42 @@ export class UserService implements IUserService {
         this.hash = hash;
         this.emailService = email;
     }
+    async verifyEmail(token: string): Promise<ServiceResponse<null>> {
+        try {
+
+            const email = await this.tokenService.verifyToken(token);
+
+            console.log("🚀 ~ file: userService.ts:40 ~ UserService ~ verifyEmail ~ email:", email)
+
+            const result = await this.repository.verifyEmail(email);
+            if (result) {
+                return new ServiceResponse(ResponseStatus.Success, "Email başarıyla doğrulandı", null, StatusCodes.OK)
+            }
+            return new ServiceResponse(ResponseStatus.Failed, "Email doğrulanırken hata meydana geldi", null, StatusCodes.BAD_REQUEST)
+        } catch (error) {
+            return new ServiceResponse(ResponseStatus.Failed, "Email doğrulanırken hata meydana geldi", null, StatusCodes.BAD_REQUEST)
+        }
+    }
+    async updatePassword(email: string, password: string): Promise<ServiceResponse<null>> {
+        try {
+
+            const result = await this.repository.updatePassword(email, password);
+            if (result) {
+                return new ServiceResponse(ResponseStatus.Success, "Şifre başarıyla güncellendi", null, StatusCodes.OK)
+            }
+            return new ServiceResponse(ResponseStatus.Failed, "Şifre güncellenirken hata meydana geldi", null, StatusCodes.BAD_REQUEST)
+        } catch (error) {
+
+            return new ServiceResponse(ResponseStatus.Failed, "Şifre güncellenirken hata meydana geldi", null, StatusCodes.BAD_REQUEST)
+        }
+    }
     async googleLogin(email: string): Promise<ServiceResponse<{ token: string; } | null>> {
 
         try {
             const result = await this.repository.googleLogin(email);
 
             if (result !== undefined && result !== null) {
-                const token = await this.tokenService.generateToken(result)
+                const token = await this.tokenService.generateToken(result, null)
                 return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", { token: token }, StatusCodes.OK)
             }
             else {
@@ -48,7 +77,7 @@ export class UserService implements IUserService {
                 const savedUser = await this.repository.googleRegister(email, hashedPassword);
                 console.log(savedUser)
                 if (savedUser) {
-                    const token = await this.tokenService.generateToken(savedUser)
+                    const token = await this.tokenService.generateToken(savedUser, null)
                     return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", { token: token }, StatusCodes.OK)
                 }
 
@@ -73,7 +102,7 @@ export class UserService implements IUserService {
 
                 const isPasswordTrue = await this.hash.comparePassword(password, result?.password ?? '')
                 if (isPasswordTrue && result?.isVerified) {
-                    const token = await this.tokenService.generateToken(result)
+                    const token = await this.tokenService.generateToken(result, null)
                     return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", { token: token }, StatusCodes.OK)
                 } else if (isPasswordTrue && !result?.isVerified) {
                     return new ServiceResponse(ResponseStatus.Failed, "E-Posta adresinize gönderdiğimiz talimatları takip ederek aktivasyonunuzu tamamladıktan sonra tekrar deneyiniz.", null, StatusCodes.BAD_REQUEST)
@@ -98,7 +127,8 @@ export class UserService implements IUserService {
             const result = await this.repository.register(email, hashedPassword);
 
             if (result) {
-                this.emailService.sendVerificationEmail(email, 'token');
+                const token = await this.tokenService.generateToken(result, '1d')
+                this.emailService.sendVerificationEmail(email, token);
             }
 
             return new ServiceResponse(ResponseStatus.Success, "Kullanıcı başarıyla oluşturuldu", result, StatusCodes.OK)
