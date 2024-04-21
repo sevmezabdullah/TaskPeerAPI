@@ -62,7 +62,7 @@ export class UserController {
     async onEmailVerification(request: Request, response: Response) {
         const token = request.params.token;
 
-        console.log("🚀 ~ file: userController.ts:65 ~ UserController ~ onEmailVerification ~ token:", token)
+
         const result = await this.service.verifyEmail(token);
 
 

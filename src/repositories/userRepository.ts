@@ -12,8 +12,10 @@ import { eq } from "drizzle-orm";
 
 @injectable()
 export class UserRepository implements IUserRepository {
-    verifyEmail(email: string): Promise<any> {
-        const result = DB.update(user).set({ isVerified: true }).where(eq(user.email, email)).execute();
+    async verifyEmail(email: string): Promise<any> {
+
+
+        const result = await DB.update(user).set({ isVerified: true }).where(eq(user.email, email)).execute();
         if (result) {
             return result;
         }
