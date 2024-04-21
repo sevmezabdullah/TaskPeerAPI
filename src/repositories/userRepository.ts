@@ -22,6 +22,8 @@ export class UserRepository implements IUserRepository {
     }
     async updatePassword(email: string, password: string): Promise<any> {
         const result = await DB.update(user).set({ password: password }).where(eq(user.email, email)).execute();
+
+
         if (result) {
             return result;
         }

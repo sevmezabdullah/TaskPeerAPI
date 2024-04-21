@@ -48,10 +48,15 @@ export class UserService implements IUserService {
             return new ServiceResponse(ResponseStatus.Failed, "Email doğrulanırken hata meydana geldi", null, StatusCodes.BAD_REQUEST)
         }
     }
-    async updatePassword(email: string, password: string): Promise<ServiceResponse<null>> {
+    async updatePassword(token: string, password: string): Promise<ServiceResponse<null>> {
         try {
 
-            const result = await this.repository.updatePassword(email, password);
+            const verifiedToken = await this.tokenService.verifyToken(token);
+
+
+            const hashedPassword = await this.hash.hashPassword(password);
+
+            const result = await this.repository.updatePassword(verifiedToken.data.email, hashedPassword);
             if (result) {
                 return new ServiceResponse(ResponseStatus.Success, "Şifre başarıyla güncellendi", null, StatusCodes.OK)
             }

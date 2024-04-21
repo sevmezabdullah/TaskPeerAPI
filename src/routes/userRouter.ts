@@ -40,8 +40,9 @@ userRouter.post(`${envConfig.API_PREFIX}/auth/login`, controller.onLogin.bind(co
 userRouter.post(`${envConfig.API_PREFIX}/auth/register`, controller.onRegister.bind(controller))
 userRouter.get(`${envConfig.API_PREFIX}/auth/verify-email/:token`, controller.onEmailVerification.bind(controller))
 userRouter.post(`${envConfig.API_PREFIX}/auth/change-password`, controller.onPasswordChangePost.bind(controller))
+userRouter.get(`${envConfig.API_PREFIX}/auth/change-password`, controller.onPasswordChangeGet.bind(controller));
 userRouter.post(`${envConfig.API_PREFIX}/auth/forget-password`, controller.onForgotPassword.bind(controller))
 userRouter.post(`${envConfig.API_PREFIX}/auth/google`, controller.onGoogleLogin.bind(controller))
-userRouter.get(`${envConfig.PAGE_PREFIX}/change-password/:userId/:token`, controller.onPasswordChange.bind(controller))
+userRouter.get(`${envConfig.PAGE_PREFIX}/change-password/:token`, controller.onPasswordChange.bind(controller))
 
 export default userRouter;

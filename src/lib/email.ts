@@ -20,7 +20,7 @@ export class Email implements IEmail {
     async sendPasswordResetEmail(to: string, token: string): Promise<void> {
         const emailTemplateSource = fs.readFileSync(path.join(__dirname, '../templates/reset_password.handlebars'), 'utf8');
         const template = handlerbars.compile(emailTemplateSource);
-        const htmlToSend = template({ token: token });
+        const htmlToSend = template({ url: envConfig.HOSTING_URL, token: token });
         const transporter = nodemailer.createTransport({
             service: envConfig.EMAIL_SERVICE,
             host: envConfig.EMAIL_HOST,

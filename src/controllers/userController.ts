@@ -47,25 +47,35 @@ export class UserController {
     }
 
     async onPasswordChange(request: Request, response: Response) {
-        const userId = request.params.userId
-        return response.render('password_change', {});
+        const token = request.params.token
+        return response.render('password_change', { token });
     }
 
     async onPasswordChangePost(request: Request, response: Response) {
-        const email = request.body.email;
-        const password = request.body.password;
 
-        const result = await this.service.updatePassword(email, password);
-        return response.status(result.statusCode).json(result);
+        const token = request.body.token;
+        const newPassword = request.body.newPassword;
+        const result = await this.service.updatePassword(token, newPassword);
+
+        return response.status(result.statusCode).render('password_change_result', { result });
+    }
+
+
+
+    async onPasswordChangeGet(request: Request, response: Response) {
+        const email = request.query.email as string;
+
+        console.log("🚀 ~ file: userController.ts:68 ~ UserController ~ onPasswordChangeGet ~ email:", email)
+        const newPassword = request.query.newPassword as string;
+
+        console.log("🚀 ~ file: userController.ts:69 ~ UserController ~ onPasswordChangeGet ~ newPassword:", newPassword)
+        const result = await this.service.updatePassword(email, newPassword);
+        return response.status(result.statusCode).render('password_change_result', { result });
     }
 
     async onEmailVerification(request: Request, response: Response) {
         const token = request.params.token;
-
-
         const result = await this.service.verifyEmail(token);
-
-
         return response.render('email_verified_result', { result });
     }
 }
