@@ -108,7 +108,16 @@ export class UserService implements IUserService {
                 const isPasswordTrue = await this.hash.comparePassword(password, result?.password ?? '')
                 if (isPasswordTrue && result?.isVerified) {
                     const token = await this.tokenService.generateToken(result, null)
-                    return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", { token: token }, StatusCodes.OK)
+                    return new ServiceResponse(ResponseStatus.Success, "Kullanıcı doğrulandı", {
+                        token: token, user: {
+                            id: result.id,
+                            email: result.email,
+                            isVerified: result.isVerified,
+                            isPremium: result.isPremium,
+                            isActive: result.isActive,
+
+                        }
+                    }, StatusCodes.OK)
                 } else if (isPasswordTrue && !result?.isVerified) {
                     return new ServiceResponse(ResponseStatus.Failed, "E-Posta adresinize gönderdiğimiz talimatları takip ederek aktivasyonunuzu tamamladıktan sonra tekrar deneyiniz.", null, StatusCodes.BAD_REQUEST)
                 }
