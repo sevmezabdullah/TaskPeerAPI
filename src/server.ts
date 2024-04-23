@@ -15,6 +15,7 @@ import errorHandler from './middleware/errorHandler';
 import userRouter from './routes/userRouter';
 import path from 'path';
 import pageRouter from './routes/pageRouter';
+import categoryRouter from './routes/categoryRouter';
 const logger = pino({ name: 'Server Started' })
 
 
@@ -43,6 +44,7 @@ app.use(requestLogger())
 //Routes
 app.use('/health-check', healthCheckRouter)
 app.use('/user', userRouter)
+app.use('/category', categoryRouter)
 app.use('/', pageRouter)
 
 
