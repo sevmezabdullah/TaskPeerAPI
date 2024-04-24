@@ -10,7 +10,7 @@ export const category = pgTable('categories', {
     updated_at: timestamp("updated_at").notNull().defaultNow(),
     title: text("title").notNull(),
     color: text("color").notNull(),
-    emoji: text("emoji"),
+    textColor: text("textColor"),
     userId: integer('userId').notNull().references(() => user.id),
     isActive: boolean('isActive').notNull().default(true),
 })
