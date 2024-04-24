@@ -28,6 +28,10 @@ export class CategoryController {
     }
 
     async onDelete(request: Request, response: Response) {
+        const categoryId = request.params.categoryId
+        const id = Number(categoryId)
+        const result = await this.service.deleteCategory(id);
+        return response.status(result.statusCode).json(result);
 
 
     }

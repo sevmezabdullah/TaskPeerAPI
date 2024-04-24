@@ -12,7 +12,7 @@ export const CategorySchema = z.object({
     updatedAt: z.date(),
     title: z.string(),
     color: z.string(),
-    emoji: z.string().optional(),
+    textColor: z.string(),
     userId: z.number(),
 });
 
