@@ -27,5 +27,8 @@ export const envConfig = cleanEnv(process.env, {
     API_PREFIX: str(),
     PAGE_PREFIX: str(),
     HOSTING_URL: str(),
+    CLOUDINARY_CLOUD_NAME: str(),
+    CLOUDINARY_API_KEY: str(),
+    CLOUDINARY_API_SECRET: str(),
 
 });

@@ -1,9 +1,17 @@
 import { envConfig } from './utils/envConfig';
 import { app, logger } from './server';
-
+import { v2 as cloudinary } from 'cloudinary';
 const server = app.listen(envConfig.PORT, () => {
     const { NODE_ENV, HOST, PORT } = envConfig;
     logger.info(`Server (${NODE_ENV}) running on port http://${HOST}:${PORT}`);
+});
+
+
+
+cloudinary.config({
+    cloud_name: envConfig.CLOUDINARY_CLOUD_NAME,
+    api_key: envConfig.CLOUDINARY_API_KEY,
+    api_secret: envConfig.CLOUDINARY_API_SECRET,
 });
 
 const onCloseSignal = () => {

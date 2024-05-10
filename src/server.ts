@@ -16,6 +16,7 @@ import userRouter from './routes/userRouter';
 import path from 'path';
 import pageRouter from './routes/pageRouter';
 import categoryRouter from './routes/categoryRouter';
+import taskRouter from './routes/taskRouter';
 const logger = pino({ name: 'Server Started' })
 
 
@@ -45,6 +46,7 @@ app.use(requestLogger())
 app.use('/health-check', healthCheckRouter)
 app.use('/user', userRouter)
 app.use('/category', categoryRouter)
+app.use('/task', taskRouter)
 app.use('/', pageRouter)
 
 
