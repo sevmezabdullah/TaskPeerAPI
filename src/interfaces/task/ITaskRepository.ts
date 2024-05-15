@@ -9,8 +9,9 @@ export interface ITaskRepository {
     deleteTask(id: number): Promise<any>
     getTaskByUserId(userId: number): Promise<Task[]>
     getTaskByCategoryId(categoryId: number): Promise<Task[]>
-    getTaskByStatus(status: string): Promise<Task[]>
-    getTaskByIsRoutine(isRoutine: boolean): Promise<Task[]>
-    getTaskByIsCompleted(isCompleted: boolean): Promise<Task[]>
+
+    getTaskByIsRoutine(isRoutine: boolean, userId: number): Promise<Task[]>
+    getTaskByIsCompleted(isCompleted: boolean, userId: number): Promise<Task[]>
+    getStatistics(userId: number, startDate: Date, endDate: Date): Promise<any>
 
 }

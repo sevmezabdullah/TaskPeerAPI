@@ -4,7 +4,7 @@ import { pgTable, serial, timestamp, text, boolean, numeric, integer } from "dri
 import { user } from "./user";
 
 
-export const category = pgTable('categories', {
+export const category = pgTable('category', {
     id: serial("id").primaryKey(),
     created_at: timestamp("created_at").notNull().defaultNow(),
     updated_at: timestamp("updated_at").notNull().defaultNow(),

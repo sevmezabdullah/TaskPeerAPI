@@ -21,6 +21,7 @@ export const TaskSchema = z.object({
     isActive: z.boolean(),
     userId: z.number(),
     categoryId: z.number(),
+    routineFrequency: z.array(z.string()),
 });
 
 // Input Validation for 'GET users/:id' endpoint

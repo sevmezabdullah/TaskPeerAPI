@@ -3,7 +3,7 @@ import { ICategoryRepository } from "../interfaces/category/ICategoryRepository"
 import { Category } from "../models/CategoryModel";
 import { DB } from "../db/db.connection";
 import { category } from "../db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 
 @injectable()
@@ -26,7 +26,7 @@ export class CategoryRepository implements ICategoryRepository {
         throw new Error("Kategori silinemedi.");
     }
     async getCategories(userId: number): Promise<any> {
-        const result = await DB.select().from(category).where(eq(category.userId, userId)).execute();
+        const result = await DB.select().from(category).where(and(eq(category.userId, userId), eq(category.isActive, true))).execute();
         if (result) {
             return result;
         }

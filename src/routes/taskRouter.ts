@@ -25,7 +25,11 @@ const controller = container.get<TaskController>(INTERFACE_TYPE.TaskController)
 taskRouter.post(`${envConfig.API_PREFIX}/create`, upload.single('file'), controller.onCreateTask.bind(controller))
 taskRouter.get(`${envConfig.API_PREFIX}/getTasks/:userId`, controller.onGetTasks.bind(controller))
 taskRouter.get(`${envConfig.API_PREFIX}/getTaskByCategoryId/:categoryId`, controller.onGetTaskByCategoryId.bind(controller))
+taskRouter.get(`${envConfig.API_PREFIX}/getTasksByRoutine`, controller.onGetTaskByIsRoutine.bind(controller))
+taskRouter.delete(`${envConfig.API_PREFIX}/deleteTask`, controller.onDeleteTask.bind(controller))
+taskRouter.get(`${envConfig.API_PREFIX}/getStatistics`, controller.onGetStatistics.bind(controller))
 
+taskRouter.put(`${envConfig.API_PREFIX}/updateTask`, upload.single('file'), controller.onUpdateTask.bind(controller))
 
 
 export default taskRouter;

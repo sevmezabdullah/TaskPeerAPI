@@ -1,3 +1,3 @@
 export * from './user'
 export * from './task'
-export * from './categories'
+export * from './category'

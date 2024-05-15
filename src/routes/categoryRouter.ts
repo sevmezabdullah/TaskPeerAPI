@@ -27,7 +27,7 @@ const controller = container.get<CategoryController>(INTERFACE_TYPE.CategoryCont
 categoryRouter.post(`${envConfig.API_PREFIX}/create`, controller.onCreate.bind(controller))
 categoryRouter.delete(`${envConfig.API_PREFIX}/delete`, controller.onDelete.bind(controller))
 categoryRouter.put(`${envConfig.API_PREFIX}/update`, controller.onUpdate.bind(controller))
-categoryRouter.get(`${envConfig.API_PREFIX}/getAll/:userId`, controller.getAll.bind(controller))
+categoryRouter.get(`${envConfig.API_PREFIX}/getByUserId/:userId`, controller.onGetByUserId.bind(controller))
 categoryRouter.get(`${envConfig.API_PREFIX}/getByCategoryId`, controller.onGetByCategoryId.bind(controller));
 categoryRouter.get(`${envConfig.API_PREFIX}/getByUserId`, controller.onGetByUserId.bind(controller))
 
