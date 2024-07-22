@@ -1,43 +1,48 @@
-name: Task Peer API
+name: Deploy to CapRover
 
 on:
   push:
     branches:
-      - release
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "20"
+          node-version: "18"
 
       - name: Install dependencies
         run: npm install
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_SERVER }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SECRET_PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          script: |
-            cd ~/var/www/task-peer-api
-            git pull origin release
-            rm -r ~/var/www/task-peer-api/src/db/migrations/*
-            rm -r ~/var/www/task-peer-api/src/db/data/*
-            npm install
-            npm run db:generate
-            npm run db:migrate
-            npm run stop
-            npm run deploy
+      - name: Generate DB
+        run: npm run db:generate
+
+      - name: Migrate DB
+        run: npm run db:migrate
+
+      - name: Push DB
+        run: npm run db:push
+
+      - name: Deploy the project
+        run: npm run deploy
+
+      - name: Deploy to CapRover
+        env:
+          CAPROVER_APP_NAME: ${{ secrets.CAPROVER_APP_NAME }}
+          CAPROVER_SERVER: ${{ secrets.CAPROVER_SERVER }}
+          CAPROVER_PASSWORD: ${{ secrets.CAPROVER_PASSWORD }}
+        run: |
+          npx caprover deploy \
+            -h $CAPROVER_SERVER \
+            -p $CAPROVER_PASSWORD \
+            -a $CAPROVER_APP_NAME \
+            --branch main \
+            --build-cmd "npm install && npm run deploy" \
+            --tar-ignore "node_modules"
