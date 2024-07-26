@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Install Environment"){
             steps {
-                sh 'sudo apt install curl'
+                sh 'apt install curl'
                 sh 'curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
                 sh 'export NVM_DIR="$HOME/.nvm"'
                 sh 'source ~/.bashrc'
