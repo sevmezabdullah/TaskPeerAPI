@@ -5,11 +5,6 @@ pipeline {
     }
 
     stages {
-      stage('Install expect') {
-            steps {
-                sh 'apt-get update && apt-get install -y expect'
-            }
-        }
 
         stage("Checkout") {
             steps {
@@ -25,7 +20,7 @@ pipeline {
             steps {
                 sh 'npm run db:generate'
                 sh 'npm run db:migrate'
-                sh 'npm run db:push'
+                sh 'npm run db:push --force'
             }
         }
         stage("Deploy") {
