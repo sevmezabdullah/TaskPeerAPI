@@ -35,6 +35,15 @@ pipeline {
                 sh 'curl ifconfig.me'
             }
         }
+            stage('Deploy to CapRover') {
+            steps {
+                sh '''
+                docker build -t root/task_peer .
+                captain login --server https://captain.api.digiqrmenu.com.tr/ --user admin --password captain42
+                captain deploy -p ./Dockerfile --app root/task_peer
+                '''
+            }
+        }
 
     }
 }

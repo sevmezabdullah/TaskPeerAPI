@@ -5,14 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
-    "deploy": "pm2 start src/index.ts --name taskpeerapi",
-    "restart": "pm2 -i restart",
-    "stop": "pm2 stop taskpeerapi",
-    "monitor": "pm2 monit",
     "db:generate": "drizzle-kit generate:pg",
-    "db:push": "drizzle-kit push:pg",
     "db:migrate": "tsx ./migration.ts",
-    "db:studio": "drizzle-kit studio --port 6000"
+    "db:push": "drizzle-kit push:pg",
+    "deploy": "pm2 start src/index.ts --name taskpeerapi"
   },
   "keywords": [],
   "author": "Abdullah Sevmez",
