@@ -30,5 +30,11 @@ pipeline {
             }
         }
 
+        stage("Information"){
+            steps{
+                sh 'curl ifconfig.me'
+            }
+        }
+
     }
 }
