@@ -18,6 +18,7 @@ pipeline {
         }
         stage("DB Migration") {
             steps {
+                sh 'npm run db:generate'
                 sh 'npm run db:migrate'
                 sh 'npm run db:push'
             }
