@@ -26,7 +26,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 sh 'npm i -g bun'
-                sh 'sudo npm run deploy'
+                sh 'npm run deploy'
             }
         }
 
