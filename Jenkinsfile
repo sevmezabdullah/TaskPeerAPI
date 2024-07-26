@@ -22,5 +22,8 @@ pipeline{
                 sh 'npm run deploy'
             }
         }
+        stage("Build Image"){
+            sh ''
+        }
     }
 }
