@@ -39,6 +39,11 @@ pipeline {
     }
       post {
         success {
+            sh '''curl -X POST -H 'Content-Type: application/json' -d '{
+    "email": "abdullahsevmez@gmail.com",
+    "password": "123456"
+    }' http://localhost:5001/user/api/auth/register
+    '''
             sh '''curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "882145688", "text": "🚀 Task Peer Deployment Succeed ", "disable_notification": false}' https://api.telegram.org/bot7363271537:AAE51HI4oRHJMfZWKNuXjMk1uNrkxcjSAK8/sendMessage'''
     }
 
