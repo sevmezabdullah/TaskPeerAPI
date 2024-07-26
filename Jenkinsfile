@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh 'npm run db:generate'
                 sh 'npm run db:migrate'
-                sh 'yes | npm run db:push --force'
+                sh -c 'yes | npm run db:push --force'
             }
         }
         stage("Deploy") {
