@@ -20,7 +20,18 @@ pipeline {
             steps {
                 sh 'npm run db:generate'
                 sh 'npm run db:migrate'
-                sh -c 'npm run db:push'
+             sh '''
+                    #!/usr/bin/expect -f
+                    set timeout -1
+                    spawn npm run db:push
+                    expect {
+                        "abort/yes" {
+                            send "yes\r"
+                            exp_continue
+                        }
+                    }
+                    interact
+                    '''
             }
         }
         stage("Deploy") {
