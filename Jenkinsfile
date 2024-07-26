@@ -7,7 +7,7 @@ pipeline {
                 sh 'sudo apt install curl'
                 sh 'curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
                 sh 'export NVM_DIR="$HOME/.nvm"'
-                sh '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+                sh 'source ~/.bashrc'
                 sh 'nvm install 18.19.0'
                 sh 'nvm use 18.19.0'
             }
