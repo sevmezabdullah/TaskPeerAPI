@@ -23,7 +23,9 @@ pipeline{
             }
         }
         stage("Build Image"){
-            sh ''
+       steps{
+             sh ''
+       }
         }
     }
 }
