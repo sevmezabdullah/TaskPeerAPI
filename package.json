@@ -10,7 +10,7 @@
     "stop": "pm2 stop taskpeerapi",
     "monitor": "pm2 monit",
     "db:generate": "drizzle-kit generate:pg",
-    "db:push": "drizzle-kit push:pg",
+    "db:push": "drizzle-kit push:pg --force",
     "db:migrate": "tsx ./migration.ts",
     "db:studio": "drizzle-kit studio --port 6000"
   },
