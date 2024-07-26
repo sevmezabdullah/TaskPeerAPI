@@ -7,7 +7,7 @@ pipeline {
     stages {
       stage('Install expect') {
             steps {
-                sh 'sudo apt-get update && sudo apt-get install -y expect'
+                sh 'apt-get update && apt-get install -y expect'
             }
         }
 
