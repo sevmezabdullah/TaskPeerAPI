@@ -27,13 +27,9 @@ pipeline {
             steps {
                 sh 'npm i -g bun'
                 sh 'npm run deploy'
+                sh 'pm2 logs'
             }
         }
-        stage("Build Image") {
-            steps {
-                // 'sh' komutunun içeriğini doldurun veya kaldırın.
-                sh 'echo "Building Docker image..."'
-            }
-        }
+
     }
 }
