@@ -1,9 +1,11 @@
 pipeline {
     agent any
-    tools {
-        nodejs "node"
+    tools{
+        nodejs "nodejs"
     }
+
     stages {
+
         stage("Checkout") {
             steps {
                 checkout scm
@@ -11,13 +13,25 @@ pipeline {
         }
         stage("Install Dependencies") {
             steps {
-                sh 'npm install'
+                sh 'npm install --force'
             }
         }
         stage("DB Migration") {
             steps {
+                sh 'npm run db:generate'
                 sh 'npm run db:migrate'
-                sh 'npm run db:push'
+             sh '''
+                    #!/usr/bin/expect -f
+                    set timeout -1
+                    spawn npm run db:push
+                    expect {
+                        "abort/yes" {
+                            send "yes\r"
+                            exp_continue
+                        }
+                    }
+                    interact
+                    '''
             }
         }
         stage("Deploy") {
