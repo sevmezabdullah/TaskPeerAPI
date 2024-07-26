@@ -27,6 +27,7 @@ pipeline {
             steps {
                 sh 'npm i -g bun'
                 sh 'npm run deploy'
+                sh 'npm i -g pm2'
                 sh 'pm2 logs'
             }
         }
