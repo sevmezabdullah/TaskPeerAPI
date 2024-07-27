@@ -27,8 +27,7 @@ pipeline {
             steps {
                 sh 'npm i -g bun'
                 sh 'npm run deploy'
-                sh 'ufw allow 5001/tcp'
-                sh 'ufw allow 5001'
+        
             }
         }
 
