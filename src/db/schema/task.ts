@@ -1,6 +1,6 @@
 
 import { InferSelectModel } from "drizzle-orm";
-import { pgTable, serial, timestamp, text, boolean, integer, numeric } from "drizzle-orm/pg-core";
+import { pgTable, serial, timestamp, text, boolean, integer, numeric, json } from "drizzle-orm/pg-core";
 import { user } from "./user";
 import { category } from "./category";
 
@@ -14,7 +14,7 @@ export const task = pgTable('task', {
     routineDays: integer("routineDays").array(),
     task: text("task").notNull(),
     audioSource: text("audioSource"),
-    isDone: boolean("isDone").notNull().default(false),
+    doneTasks: json("isDone").array().default([]),
     isDoneDate: timestamp("isDoneDate"),
     deletedDate: timestamp("deletedDate"),
     isActive: boolean("isActive").notNull().default(true),
