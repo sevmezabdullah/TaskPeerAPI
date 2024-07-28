@@ -26,7 +26,8 @@ export class TaskRepository implements ITaskRepository {
             isRoutine: record.isRoutine,
             reminderAt: record.reminderAt,
             userId: record.userId,
-            categoryId: record.categoryId
+            categoryId: record.categoryId,
+            routineDays: record.routineDays
         }).execute();
         if (result) {
             return result;
@@ -98,6 +99,7 @@ export class TaskRepository implements ITaskRepository {
             userId: newTask.userId,
             categoryId: newTask.categoryId,
             isDone: newTask.isDone,
+            routineDays: newTask.routineDays
 
         }).where(eq(task.id, id)).execute();
         if (result) {
@@ -172,6 +174,4 @@ export class TaskRepository implements ITaskRepository {
         }
         throw new Error("Tasklar getirilirken hata meydana geldi.");
     }
-
-
 }

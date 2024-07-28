@@ -33,9 +33,11 @@ export class TaskService implements ITaskService {
      */
     async createTask(task: Task, file: any): Promise<ServiceResponse> {
         try {
-            const uploadFile = await this.uploadFile.uploadFile(file);
-            task.audioSource = uploadFile;
 
+            if (file) {
+                const uploadFile = await this.uploadFile.uploadFile(file);
+                task.audioSource = uploadFile;
+            }
             const result = await this.repository.createTask(task);
             if (result) {
                 return new ServiceResponse(ResponseStatus.Success, "Task oluşturuldu", null, 200)

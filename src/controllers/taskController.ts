@@ -30,8 +30,15 @@ export class TaskController {
         customRequest.body.categoryId = Number.parseInt(customRequest.body.categoryId)
         const body = customRequest.body
         const file = customRequest.file
-        const result = await this.service.createTask(body, file)
-        return response.status(result.statusCode).json(result)
+        if (!file) {
+            const result = await this.service.createTask(body, file)
+            return response.status(result.statusCode).json(result)
+        } else {
+            const result = await this.service.createTask(body, null)
+            return response.status(result.statusCode).json(result)
+        }
+
+
     }
 
 
