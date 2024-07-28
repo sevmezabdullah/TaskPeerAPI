@@ -14,7 +14,6 @@ export const task = pgTable('task', {
     routineDays: integer("routineDays").array(),
     task: text("task").notNull(),
     audioSource: text("audioSource"),
-    doneTasks: json("isDone").array().default([]),
     isDoneDate: timestamp("isDoneDate"),
     deletedDate: timestamp("deletedDate"),
     isActive: boolean("isActive").notNull().default(true),
